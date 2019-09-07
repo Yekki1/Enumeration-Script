@@ -1,19 +1,27 @@
 #!/bin/bash
 
 #This script can be run agaisnt a range of IPs to run a whole heap of enumeration. 
-#This has been created by Yekki(@yekki_1) for the purpose of assisting with background enumeration for any time you have other things to do and a time limit. Like a certain exam.
+#This has been created by Yekki(@yekki_1) for the purpose of assisting with background enumeration.
+#Useful for any time you have other things to do and a time limit. Like a certain exam.
 
 #Usage ./enumeration.sh <start IP> <end IP>
 
 #The script goes through and creates folder structures for each IP which is up.
 #A full port nmap is run agaisnt the target
 #A -sC (all scripts) nmap is run agaisnt open ports on a target
+#A vuln script nmap is run agaisnt all ports on a target
 #A UDP top 200 nmap is run agaisnt the target
 #If HTTP(s) is found, gobuster and nikto are run agaisnt the targets
+#Enum4Linux is run on all targets
+#SMB is looked for on all targets
+#If SMB is open smbmap runs agaisnt targets
 
 #Requirements - Wordlist needed at: /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
 #	      - Nikto installed
 #	      - nmap installed
+#	      - smbmap installed
+#	      - Enum4Linux installed
+# Bascially just use kali!
 
 
 #Variables
@@ -157,24 +165,24 @@ enum4linux()
 }
 
 function run {
-#	check
-#		echo "Initial nmap Scan"
-#	initial_nmap
-#		echo "Initial nmap finished. Creating folders"
-#	create_folders
-#		echo "Folders Created"
-#		echo "Running full nmap port scan over:"
-#		 cat AvailableIPs.txt
-#	full_port_nmap
-#		echo "Full Port Scan Finished"
-#		echo "Starting Full Script Scan"
-#	full_nmap
+	check
+		echo "Initial nmap Scan"
+	initial_nmap
+		echo "Initial nmap finished. Creating folders"
+	create_folders
+		echo "Folders Created"
+		echo "Running full nmap port scan over:"
+		 cat AvailableIPs.txt
+	full_port_nmap
+		echo "Full Port Scan Finished"
+		echo "Starting Full Script Scan"
+	full_nmap
 		echo "Run 
-#		echo "Full script scan Finished"
-#		echo "Starting UDP scan"
-#	udp_nmap
-#		echo "UDP Scan Finished"
-#		echo "Checking for webservers"
+		echo "Full script scan Finished"
+		echo "Starting UDP scan"
+	udp_nmap
+		echo "UDP Scan Finished"
+		echo "Checking for webservers"
 	create_webserver_folder
 	check_webservers
 		echo "Webserver Folders Created"
