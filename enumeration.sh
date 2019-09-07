@@ -135,7 +135,7 @@ create_smb_folder()
 {
         for i in $( cat AvailableIPs.txt); do
                 for j in $(sed -e 's/ /\n/g' $i/nmap/allports | awk -F \/ '/smb/ {print $1}'); do
-                        if [ -d $i/webservers ];then
+                        if [ -d $i/smb ];then
                                 return 0
                                 else
                                 mkdir $i/smb
@@ -152,16 +152,9 @@ check_smb()
                                 return 0
                         else
                                 echo "No SMB found."
-                                enum4linux
+                                exit 1
                         fi
         done
-}
-enum4linux()
-{
-        for i in $( cat AvailableIPs.txt); do
-                enum4linux -a $i > $i/enum4linux
-        done
-        return 0
 }
 
 function run {
@@ -189,13 +182,12 @@ function run {
 		echo "Running Gobuster"
 	gobuster_http
 	gobuster_https
-		echo "Gobuster Finished running" 
+		echo "Gobuster Finished running"
+		echo "Might be worth running nikto on all webservers"
 		echo "Checking for SMB"
 	create_smb_folder
 	check_smb
-		echo "SMB Folder Created"
-		echo "Running Enum4Linux"
-	enum4linux
+		echo "SMB Folder Created as a reminder!"
 		echo "Finished"
 		exit 1
 }
