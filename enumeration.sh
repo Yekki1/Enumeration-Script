@@ -148,18 +148,18 @@ check_smb()
 {
         for i in $( cat AvailableIPs.txt); do
                         if [ -d $i/smb ]; then
-                                echo "SMB found"
+                                echo "SMB found on $i would be worth checking SMB Map"
                                 return 0
                         else
-                                echo "No SMB found. Exiting"
-                                exit 1
+                                echo "No SMB found."
+                                enum4linux
                         fi
         done
 }
 enum4linux()
 {
         for i in $( cat AvailableIPs.txt); do
-                enum4linux $i > enum4linux
+                enum4linux -a $i > $i/enum4linux
         done
         return 0
 }
@@ -191,13 +191,11 @@ function run {
 	gobuster_https
 		echo "Gobuster Finished running" 
 		echo "Checking for SMB"
-#	create_smb_folder
-#	check_smb
-#		echo "SMB Folder Created"
-#		echo "Running smbmap"
-#	smbmap
-#		echo "Running Enum4Linux"
-#	enum4linux
+	create_smb_folder
+	check_smb
+		echo "SMB Folder Created"
+		echo "Running Enum4Linux"
+	enum4linux
 		echo "Finished"
 		exit 1
 }
