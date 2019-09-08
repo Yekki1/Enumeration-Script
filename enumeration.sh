@@ -113,9 +113,11 @@ gobuster_http()
 			if [ $j  == 80 ]
 				then
 				sudo gobuster dir -u $i:$j -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -e .php,.txt,.html,.htm,.bak -t 50 > /dev/null 2>&1
+				echo "HTTP gobuster on $i complete"
 				else
 				protocol=$(sed -e 's/ /\n/g' $i/nmap/allports | awk -F \/ '/http/ {print $5}' | sort -u | tr -d '\n')
 				sudo gobuster dir -u $i:$j -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -e .php,.txt,.html,.htm,.bak -t 50 > /dev/null 2>&1
+				echo "HTTP gobuster on $i complete"
 			fi
 		done
 	done
@@ -127,10 +129,12 @@ gobuster_https()
                         if [ $j == 443 ]
 				then
                                 sudo gobuster dir -u $i:$j -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -e .php,.txt,.html,.htm,.bak -t 50 > /dev/null 2>&1
-                                else
+                                echo "HTTPs gobuster on $i complete"
+				else
                                 protocol=$(sed -e 's/ /\n/g' $i/nmap/allports | awk -F \/ '/https/ {print $5}' | sort -u | tr -d '\n')
                                 sudo gobuster dir -u $protocol://$i:$j -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -e .php,.txt,.html,.htm,.bak -t 50 > /dev/null 2>&1
-                        fi
+                        	echo "HTTPs gobuster on $i complete"
+			fi
                 done
         done
 }
