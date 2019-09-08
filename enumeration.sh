@@ -170,7 +170,6 @@ function run {
 		echo "Full Port Scan Finished"
 		echo "Starting Full Script Scan"
 	full_nmap
-		echo "Run 
 		echo "Full script scan Finished"
 		echo "Starting UDP scan"
 	udp_nmap
