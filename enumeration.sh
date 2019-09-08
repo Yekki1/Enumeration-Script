@@ -58,6 +58,7 @@ full_port_nmap()
 {
 	for i in $( cat AvailableIPs.txt ); do
 		sudo nmap -sS -p- -oG $i/nmap/allports $i > /dev/null 2>&1
+		echo "Full port scan on $i complete"
 	done
 	return 0
 }
@@ -67,6 +68,7 @@ full_nmap()
 	sed -e 's/ /\n/g' $i/nmap/allports | awk -F \/ '/open/ {print $1}' | sed -z 's/\n/,/g' > nmapports.txt
 		sudo nmap -sC -sV -O -oN $i/nmap/fullscan $i -p "$(cat nmapports.txt)" > /dev/null 2>&1
 		sudo nmap -sV --script=vuln -oN $i/nmap/vulnscan $i -p "$(cat nmapports.txt)" > /dev/null 2>&1
+		echo "Full scripts scan on $i complete"
 	rm $i/nmap/nmapports.txt
 	done
 	return 0
@@ -75,6 +77,7 @@ udp_nmap()
 {
 	for i in $( cat AvailableIPs.txt); do
 		sudo nmap -sUVC -oN $i/nmap/UDPScan $i > /dev/null 2>&1
+		echo "UDP scan on $i complete"
 	done
 	return 0
 }
