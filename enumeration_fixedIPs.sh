@@ -78,7 +78,7 @@ full_nmap()
 udp_nmap()                                                                                                                                                
 {                                                                                                                                                         
         for i in $( cat AvailableIPs.txt); do                                                                                                             
-                nmap -sU -n --top-ports=200 -oN $i/nmap/UDPScan $i > /dev/null 2>&1                                                                       
+                nmap -sU -n --top-ports=200 -T4 -oN $i/nmap/UDPScan $i > /dev/null 2>&1                                                                       
                 echo $(date +%k:%M) " - UDP scan on $i complete"                                                                                          
         done                                                                                                                                              
         return 0                                                                                                                                          
